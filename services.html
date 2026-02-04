@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | LuxeBid - Expert Valuation & Consignment</title>
+
+    <!-- Fonts & CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { poppins: ['Poppins', 'sans-serif'] },
+                    colors: { dark: '#0f172a' }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+</head>
+
+<body class="text-white font-poppins selection:bg-purple-500/30 overflow-x-hidden"
+    style="background: linear-gradient(135deg, #0a0118 0%, #1a0b2e 50%, #0a0118 100%);">
+
+    <!-- Cyber Grid -->
+    <div class="fixed inset-0 -z-50 pointer-events-none overflow-hidden cyber-grid">
+        <div class="absolute top-0 right-0 w-[40%] h-[40%] bg-indigo-500/10 blur-[100px] rounded-full"></div>
+        <div class="absolute bottom-0 left-0 w-[40%] h-[40%] bg-purple-500/10 blur-[100px] rounded-full"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav id="navbar"
+        class="sticky top-0 z-50 flex items-center justify-between w-full h-18 px-6 md:px-12 lg:px-20 glass"
+        style="border-bottom: 1px solid rgba(168, 85, 247, 0.3); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(168, 85, 247, 0.1);">
+        <a href="index.html" class="flex items-center gap-2 group">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center holographic neon-border"
+                style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(6, 182, 212, 0.3));">
+                <i data-lucide="zap" class="w-6 h-6 text-cyan-300"></i>
+            </div>
+            <span class="text-xl font-bold tracking-tight text-gradient">LUXEBID</span>
+        </a>
+
+        <div class="hidden lg:flex items-center gap-4 xl:gap-8 text-sm font-medium">
+            <!-- Home Dropdown -->
+            <div class="relative group">
+                <button class="flex items-center gap-1 hover:text-indigo-400 py-6">Home <i data-lucide="chevron-down"
+                        class="w-4 h-4 transition-transform group-hover:rotate-180"></i></button>
+                <div
+                    class="absolute top-[100%] left-0 w-48 bg-slate-900 border border-slate-800 rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-2xl z-50">
+                    <a href="index.html" class="block px-4 py-2 hover:bg-slate-800">Home 1</a>
+                    <a href="index-2.html" class="block px-4 py-2 hover:bg-slate-800">Home 2</a>
+                </div>
+            </div>
+
+            <a href="about.html" class="hover:text-indigo-400">About</a>
+            <a href="services.html" class="hover:text-indigo-400 transition-colors">Auction Services</a>
+            <a href="contact.html" class="hover:text-indigo-400 transition-colors">Contact</a>
+
+            <!-- Dashboard Dropdown -->
+            <div class="relative group">
+                <button class="flex items-center gap-1 hover:text-indigo-400 transition-colors py-6">
+                    Dashboard <i data-lucide="chevron-down"
+                        class="w-4 h-4 transition-transform group-hover:rotate-180"></i>
+                </button>
+                <div
+                    class="absolute top-[100%] left-0 w-52 bg-slate-900 border border-slate-800 rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top translate-y-2 group-hover:translate-y-0 shadow-2xl">
+                    <a href="user-dashboard.html"
+                        class="block px-4 py-2 hover:bg-indigo-600/10 hover:text-indigo-400 transition-colors">User
+                        Dashboard</a>
+                    <a href="admin-dashboard.html"
+                        class="block px-4 py-2 hover:bg-indigo-600/10 hover:text-indigo-400 transition-colors">Admin
+                        Dashboard</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden lg:flex items-center gap-4">
+            <button onclick="toggleTheme()" class="p-2 glass rounded-lg hover:bg-white/10 transition-colors"><i
+                    id="theme-icon" data-lucide="sun" class="w-5 h-5 text-indigo-400"></i></button>
+            <button onclick="toggleRTL()" class="p-2 glass rounded-lg hover:bg-white/10 transition-colors"><i
+                    data-lucide="globe" class="w-5 h-5 text-indigo-400"></i></button>
+            <a href="login.html"
+                class="px-6 py-2 border border-slate-700 hover:bg-slate-900 rounded-lg transition-all active:scale-95">Login</a>
+            <a href="login.html"
+                class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all active:scale-95 shadow-lg shadow-indigo-600/20">Sign
+                Up</a>
+        </div>
+
+        <button id="mobile-menu-btn"
+            class="lg:hidden flex flex-col items-center justify-center gap-1.5 w-10 h-10 p-2 hover:bg-slate-800 rounded-lg transition-all"
+            aria-label="Toggle Menu">
+            <span class="hamburger-line w-6 h-0.5 bg-indigo-400 rounded-full transition-all duration-300"></span>
+            <span class="hamburger-line w-6 h-0.5 bg-indigo-400 rounded-full transition-all duration-300"></span>
+            <span class="hamburger-line w-6 h-0.5 bg-indigo-400 rounded-full transition-all duration-300"></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="fixed inset-0 z-[120] bg-slate-950/95 backdrop-blur-xl flex flex-col items-center justify-start gap-8 text-2xl font-medium transition-all duration-500 translate-x-full opacity-0 invisible lg:hidden overflow-y-auto py-24">
+        <div class="flex flex-col items-center gap-6">
+            <div class="flex flex-col items-center gap-2">
+                <span class="text-slate-500 text-sm uppercase tracking-widest">Home</span>
+                <a href="index.html" class="mobile-link hover:text-indigo-400 text-lg transition-colors">Home 1</a>
+                <a href="index-2.html" class="mobile-link hover:text-indigo-400 text-lg transition-colors">Home 2</a>
+            </div>
+            <a href="about.html" class="mobile-link hover:text-indigo-400 text-lg transition-colors">About</a>
+            <a href="services.html" class="mobile-link hover:text-indigo-400 text-lg transition-colors">Auction
+                Services</a>
+            <a href="contact.html" class="mobile-link hover:text-indigo-400 text-lg transition-colors">Contact</a>
+            <div class="flex flex-col items-center gap-2">
+                <span class="text-slate-500 text-sm uppercase tracking-widest">Dashboard</span>
+                <a href="user-dashboard.html" class="mobile-link hover:text-indigo-400 text-lg transition-colors">User
+                    Dashboard</a>
+                <a href="admin-dashboard.html" class="mobile-link hover:text-indigo-400 text-lg transition-colors">Admin
+                    Dashboard</a>
+            </div>
+        </div>
+        <div class="flex flex-col gap-4 mt-8 w-full px-12">
+            <a href="login.html"
+                class="px-6 py-2 border border-slate-700 hover:bg-slate-900 rounded-lg transition-all active:scale-95 text-center text-sm">Login</a>
+            <a href="login.html"
+                class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all active:scale-95 shadow-lg shadow-indigo-600/20 text-center text-sm">Sign
+                Up</a>
+
+            <!-- Theme Toggle -->
+            <button onclick="toggleTheme()" class="p-2 glass rounded-lg hover:bg-white/10 transition-colors"
+                aria-label="Toggle Theme">
+                <i id="theme-toggle-icon" data-lucide="sun" class="w-5 h-5 text-indigo-400"></i>
+            </button>
+
+            <!-- RTL Toggle -->
+            <button onclick="toggleRTL()" class="p-2 glass rounded-lg hover:bg-white/10 transition-colors"
+                aria-label="Toggle RTL">
+                <i data-lucide="globe" class="w-5 h-5 text-indigo-400"></i>
+            </button>
+        </div>
+    </div>
+
+
+    <main class="w-full">
+        <!-- Hero -->
+        <section class="reveal relative py-20 sm:py-32 px-6 md:px-12 lg:px-20 text-center overflow-hidden">
+            <div
+                class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1)_0%,transparent_70%)] -z-10">
+            </div>
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 text-gradient reveal-child">Expert Stewardship
+            </h1>
+            <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto reveal-child">Premium valuation, marketing,
+                and
+                acquisition services for the world's most significant assets.</p>
+        </section>
+
+        <!-- The Consignment Journey -->
+        <section class="reveal px-6 md:px-12 lg:px-20 py-24 relative">
+            <div class="text-center mb-20">
+                <h2
+                    class="text-3xl md:text-5xl font-semibold mb-6 text-transparent bg-clip-text text-purple-pink-gradient animate-fade-in animate-slide-up reveal-child">
+                    The Consignment Journey</h2>
+                <p class="text-slate-400 max-w-xl mx-auto reveal-child">A seamless, four-phase process designed for
+                    absolute discretion and maximum value realization.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div
+                    class="p-6 sm:p-8 md:p-10 glass rounded-[2rem] sm:rounded-[2.5rem] border border-white/5 hover:border-indigo-500/50 transition-all duration-500 group reveal-child">
+                    <div
+                        class="w-16 h-16 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                        <i data-lucide="badge-dollar-sign" class="w-8 h-8 text-indigo-400"></i>
+                    </div>
+                    <div class="mb-4">
+                        <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">Phase 01</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Expert Valuation</h3>
+                    <p class="text-slate-400 text-sm/7 mb-8">Receive a complimentary, worldwide appraisal from our elite
+                        network of category-specific specialists.</p>
+                    <a href="contact.html"
+                        class="text-white text-xs font-bold uppercase tracking-widest flex items-center gap-2 group/link">
+                        Request Valuation
+                        <i data-lucide="arrow-right"
+                            class="w-4 h-4 group-hover/link:translate-x-1 transition-transform text-indigo-400"></i>
+                    </a>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="p-6 sm:p-8 md:p-10 glass rounded-[2rem] sm:rounded-[2.5rem] border border-white/5 hover:border-purple-500/50 transition-all duration-500 group reveal-child"
+                    style="transition-delay: 100ms;">
+                    <div
+                        class="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                        <i data-lucide="shield-check" class="w-8 h-8 text-purple-400"></i>
+                    </div>
+                    <div class="mb-4">
+                        <span class="text-[10px] font-bold text-purple-400 uppercase tracking-widest">Phase 02</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Authentication</h3>
+                    <p class="text-slate-400 text-sm/7 mb-8">Rigorous forensic analysis and scholarly provenance
+                        research to secure blockchain-backed verification.</p>
+                    <a href="contact.html"
+                        class="text-white text-xs font-bold uppercase tracking-widest flex items-center gap-2 group/link">
+                        View Vetting Process
+                        <i data-lucide="arrow-right"
+                            class="w-4 h-4 group-hover/link:translate-x-1 transition-transform text-purple-400"></i>
+                    </a>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="p-6 sm:p-8 md:p-10 glass rounded-[2rem] sm:rounded-[2.5rem] border border-white/5 hover:border-cyan-500/50 transition-all duration-500 group reveal-child"
+                    style="transition-delay: 200ms;">
+                    <div
+                        class="w-16 h-16 bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                        <i data-lucide="lock" class="w-8 h-8 text-cyan-400"></i>
+                    </div>
+                    <div class="mb-4">
+                        <span class="text-[10px] font-bold text-cyan-400 uppercase tracking-widest">Phase 03</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Private Placement</h3>
+                    <p class="text-slate-400 text-sm/7 mb-8">Discreet off-market matching for high-value items requiring
+                        absolute confidentiality and rapid closure.</p>
+                    <a href="contact.html"
+                        class="text-white text-xs font-bold uppercase tracking-widest flex items-center gap-2 group/link">
+                        Consult Private Desk
+                        <i data-lucide="arrow-right"
+                            class="w-4 h-4 group-hover/link:translate-x-1 transition-transform text-cyan-400"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Milestone Step 4 -->
+            <div class="mt-12 p-6 sm:p-8 md:p-12 glass rounded-[2rem] sm:rounded-[2.5rem] border border-white/5 bg-[radial-gradient(circle_at_right,rgba(99,102,241,0.1),transparent)] flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-12 reveal-child"
+                style="transition-delay: 300ms;">
+                <div class="lg:w-2/3">
+                    <div class="mb-4">
+                        <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">Phase 04</span>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-6">Global Marketing & Sale</h3>
+                    <p class="text-slate-400 text-lg/8">Your asset is showcased through a multi-channel intelligence
+                        network, including cinematic cinematography, private viewing events in major hubs (London,
+                        Dubai, Hong Kong), and targeted outreach to our global database of 2.4M elite collectors.</p>
+                </div>
+                <div class="lg:w-1/3 flex justify-center">
+                    <a href="login.html" class="neon-button px-12 py-5 text-lg">
+                        List in The Vault
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- Service Intelligence Map -->
+        <section class="reveal py-32 bg-slate-950 relative overflow-hidden border-y border-slate-900">
+            <div class="absolute top-0 right-0 w-[50%] h-full bg-indigo-600/5 blur-[120px] rounded-full"></div>
+            <div class="px-6 md:px-16 lg:px-32">
+                <div class="grid lg:grid-cols-2 gap-20 items-center">
+                    <div class="reveal-child">
+                        <h2
+                            class="text-4xl md:text-5xl font-semibold mb-8 text-transparent bg-clip-text text-purple-pink-gradient animate-fade-in animate-slide-up leading-tight">
+                            Global Service <br><span class="text-gradient">Intelligence Network</span></h2>
+                        <p class="text-slate-400 text-lg/8 mb-12">Our specialists are strategically stationed in the
+                            world's most active high-value markets, providing on-the-ground intelligence and rapid
+                            physical vetting for our global clientele.</p>
+
+                        <div class="grid grid-cols-2 gap-8">
+                            <div
+                                class="glass p-6 rounded-2xl border-white/5 group hover:border-indigo-500/30 transition-all">
+                                <div class="text-3xl font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors counter"
+                                    data-target="8">
+                                    08</div>
+                                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Appraisal
+                                    Hubs</div>
+                            </div>
+                            <div
+                                class="glass p-6 rounded-2xl border-white/5 group hover:border-cyan-500/30 transition-all">
+                                <div class="text-3xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors counter"
+                                    data-target="14">
+                                    14</div>
+                                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Logistics
+                                    Nodes</div>
+                            </div>
+                            <div
+                                class="glass p-6 rounded-2xl border-white/5 group hover:border-purple-500/30 transition-all">
+                                <div
+                                    class="text-3xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">
+                                    24/7</div>
+                                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Private Desk
+                                </div>
+                            </div>
+                            <div
+                                class="glass p-6 rounded-2xl border-white/5 group hover:border-emerald-500/30 transition-all">
+                                <div class="text-3xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors counter"
+                                    data-target="100" data-suffix="%">
+                                    100%</div>
+                                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Secure
+                                    Transit</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative reveal-child">
+                        <!-- Abstract Map Representation -->
+                        <div
+                            class="aspect-video glass rounded-[3rem] border-white/5 relative overflow-hidden flex items-center justify-center">
+                            <div
+                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1526778546146-b040e0146059?auto=format&fit=crop&q=80&w=1200')] bg-cover bg-center opacity-20 grayscale">
+                            </div>
+                            <div class="relative z-10 w-full h-full flex items-center justify-center p-12">
+                                <div
+                                    class="w-full h-full relative border border-white/10 rounded-2xl overflow-hidden bg-slate-900/40 backdrop-blur-sm p-8">
+                                    <div class="flex flex-col gap-6">
+                                        <div class="flex items-center justify-between border-b border-white/5 pb-4">
+                                            <span
+                                                class="text-xs font-bold text-indigo-400 uppercase tracking-tighter">Node:
+                                                LUX-LDN-01</span>
+                                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <div class="text-xl font-bold">London Intelligence Hub</div>
+                                            <div class="text-slate-500 text-[10px] uppercase">Specialization: Fine
+                                                Horology \u0026 Old Masters</div>
+                                        </div>
+                                        <div class="mt-auto flex items-center gap-4">
+                                            <div class="h-1 flex-grow bg-white/5 rounded-full overflow-hidden">
+                                                <div class="h-full bg-indigo-500 w-[85%]"></div>
+                                            </div>
+                                            <span class="text-[10px] font-mono text-indigo-400">85% OPTIMIZED</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bespoke Concierge \u0026 Logistics -->
+        <section class="reveal py-32 px-6 md:px-16 lg:px-32 relative">
+            <div class="text-center mb-24 max-w-3xl mx-auto">
+                <h2
+                    class="text-4xl md:text-6xl font-semibold mb-8 text-transparent bg-clip-text text-purple-pink-gradient animate-fade-in animate-slide-up reveal-child">
+                    White-Glove <br><span class="text-gradient">Logistics Excellence</span></h2>
+                <p class="text-slate-400 text-lg reveal-child">Protecting the integrity of your acquisition from the
+                    moment of hammer-drop to the final delivery at your private residence.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-stretch">
+                <!-- Logistics Card 1 -->
+                <div
+                    class="glass p-12 rounded-[3.5rem] border-white/5 hover:border-indigo-500/30 transition-all duration-700 group reveal-child flex flex-col">
+                    <div
+                        class="w-20 h-20 rounded-3xl bg-indigo-500/10 flex items-center justify-center mb-10 group-hover:scale-110 transition-transform">
+                        <i data-lucide="shield" class="w-10 h-10 text-indigo-400"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-6 italic">"The Vault" Secure Storage</h3>
+                    <p class="text-slate-400 text-lg/8 mb-10 border-l-2 border-indigo-500/50 pl-8">Climate-controlled,
+                        multi-layered biometric security facilities for high-value artwork and timepieces. Our private
+                        vaults are located in Zurich, Singapore, and New York.</p>
+                    <ul class="space-y-4 mb-12">
+                        <li class="flex items-center gap-3 text-sm text-slate-300">
+                            <i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Biometric Fingerprint \u0026
+                            Retina Access
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-slate-300">
+                            <i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> N+1 Precision Climate Control
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-slate-300">
+                            <i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Full Lloyd's of London
+                            Insurance
+                        </li>
+                    </ul>
+                    <div class="mt-auto">
+                        <a href="#!"
+                            class="text-indigo-400 font-bold uppercase tracking-widest text-xs flex items-center gap-3 group/btn">
+                            Explore The Vault <i data-lucide="arrow-up-right"
+                                class="w-4 h-4 group-hover/btn:-translate-y-1 group-hover/btn:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Logistics Card 2 -->
+                <div class="glass p-12 rounded-[3.5rem] border-white/5 hover:border-cyan-500/30 transition-all duration-700 group reveal-child flex flex-col"
+                    style="transition-delay: 100ms;">
+                    <div
+                        class="w-20 h-20 rounded-3xl bg-cyan-500/10 flex items-center justify-center mb-10 group-hover:scale-110 transition-transform">
+                        <i data-lucide="truck" class="w-10 h-10 text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-6 italic">Global Armed Transportation</h3>
+                    <p class="text-slate-400 text-lg/8 mb-10 border-l-2 border-cyan-500/50 pl-8">Full-cycle bonded
+                        logistics for automotive and heavy assets. Our transport fleet includes armored transporters and
+                        GPS-monitored enclosed trailers.</p>
+                    <ul class="space-y-4 mb-12">
+                        <li class="flex items-center gap-3 text-sm text-slate-300">
+                            <i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Real-time GPS Asset Tracking
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-slate-300">
+                            <i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Specialized Automotive Handlers
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-slate-300">
+                            <i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> 100% Carbon-Neutral Fleet
+                        </li>
+                    </ul>
+                    <div class="mt-auto">
+                        <a href="#!"
+                            class="text-cyan-400 font-bold uppercase tracking-widest text-xs flex items-center gap-3 group/btn">
+                            Book Logistics Unit <i data-lucide="arrow-up-right"
+                                class="w-4 h-4 group-hover/btn:-translate-y-1 group-hover/btn:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Service Tiers -->
+            <section class="reveal py-32 px-6 md:px-16 lg:px-32 relative bg-slate-900/40">
+                <div class="text-center mb-24 max-w-3xl mx-auto">
+                    <h2
+                        class="text-4xl md:text-6xl font-semibold mb-8 text-transparent bg-clip-text text-purple-pink-gradient animate-fade-in animate-slide-up reveal-child">
+                        Stewardship <span class="text-gradient">Tiers</span></h2>
+                    <p class="text-slate-400 text-lg reveal-child">Tailored consignment programs designed for everything
+                        from singular masterpieces to entire global collections.</p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Tier 1 -->
+                    <div
+                        class="glass p-6 sm:p-8 md:p-10 rounded-[2rem] sm:rounded-[2.5rem] border-white/5 flex flex-col items-center text-center group reveal-child">
+                        <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">Entry Level
+                        </div>
+                        <h3 class="text-3xl font-bold mb-8">Elite</h3>
+                        <div class="w-full h-px bg-white/5 mb-8"></div>
+                        <ul class="space-y-6 mb-12 text-slate-400 text-sm">
+                            <li>Standard Physical Appraisal</li>
+                            <li>High-Resolution Photography</li>
+                            <li>Global Marketplace Listing</li>
+                            <li>Disbursement in 14 Days</li>
+                        </ul>
+                        <div class="mt-auto w-full">
+                            <a href="contact.html"
+                                class="block w-full py-4 rounded-xl border border-white/10 hover:bg-white/5 transition-all font-bold text-xs uppercase tracking-widest">Inquire</a>
+                        </div>
+                    </div>
+
+                    <!-- Tier 2 (Featured) -->
+                    <div class="glass p-10 rounded-[2.5rem] border-indigo-500/30 bg-indigo-500/5 flex flex-col items-center text-center relative group reveal-child !overflow-visible"
+                        style="transition-delay: 100ms;">
+                        <div
+                            class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-indigo-600 rounded-full text-[10px] font-bold text-white uppercase tracking-widest shadow-lg shadow-indigo-600/50 z-10 transition-transform group-hover:scale-110">
+                            Most Selected</div>
+                        <div class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest mb-4">High Precision
+                        </div>
+                        <h3 class="text-3xl font-bold mb-8">Prime House</h3>
+                        <div class="w-full h-px bg-white/10 mb-8"></div>
+                        <ul class="space-y-6 mb-12 text-slate-300 text-sm">
+                            <li class="font-bold text-white">Advanced Forensic Vetting</li>
+                            <li>Cinematic Video Presentation</li>
+                            <li>VIP Preview Access</li>
+                            <li>Dedicated Account Strategist</li>
+                            <li>Disbursement in 7 Days</li>
+                        </ul>
+                        <div class="mt-auto w-full">
+                            <a href="contact.html"
+                                class="neon-button block w-full py-4 text-xs font-bold uppercase tracking-widest">Select
+                                Prime</a>
+                        </div>
+                    </div>
+
+                    <!-- Tier 3 -->
+                    <div class="glass p-10 rounded-[2.5rem] border-white/5 flex flex-col items-center text-center group reveal-child"
+                        style="transition-delay: 200ms;">
+                        <div class="text-[10px] font-bold text-cyan-500 uppercase tracking-widest mb-4">Invitation Only
+                        </div>
+                        <h3 class="text-3xl font-bold mb-8">Private Vault</h3>
+                        <div class="w-full h-px bg-white/5 mb-8"></div>
+                        <ul class="space-y-6 mb-12 text-slate-400 text-sm">
+                            <li class="text-cyan-400">Off-Market Matching ONLY</li>
+                            <li>Full White-Glove Logistics</li>
+                            <li>Lifetime Storage Credits</li>
+                            <li>Bespoke PR Campaigns</li>
+                            <li class="font-bold text-white italic">Instant Disbursement</li>
+                        </ul>
+                        <div class="mt-auto w-full">
+                            <a href="contact.html"
+                                class="block w-full py-4 rounded-xl border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/10 transition-all font-bold text-xs uppercase tracking-widest">Request
+                                Invitation</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Success Stories -->
+            <section class="reveal py-32 px-6 md:px-16 lg:px-32 relative overflow-hidden">
+                <div class="flex flex-col md:flex-row justify-between items-end gap-8 mb-20">
+                    <div class="max-w-2xl reveal-child">
+                        <h2
+                            class="text-4xl md:text-5xl font-semibold mb-6 italic text-transparent bg-clip-text text-purple-pink-gradient animate-fade-in animate-slide-up">
+                            Proven <span class="text-gradient">Realization</span></h2>
+                        <p class="text-slate-400 text-lg">A chronicle of extraordinary assets successfully transitioned
+                            through our stewardship network.</p>
+                    </div>
+                    <div class="reveal-child">
+                        <a href="#!"
+                            class="text-white text-xs font-bold border-b border-indigo-500 pb-2 hover:text-indigo-400 transition-colors uppercase tracking-widest">View
+                            Archives</a>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- Case Study 1 -->
+                    <div class="group reveal-child">
+                        <div
+                            class="relative rounded-[2.5rem] overflow-hidden mb-8 aspect-[4/3] glass border border-white/5 group-hover:border-indigo-500/30 transition-all duration-700">
+                            <img src="https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&q=80&w=1200"
+                                alt="Success Story"
+                                class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80">
+                            </div>
+                            <div class="absolute bottom-10 left-10 right-10">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <span
+                                        class="px-4 py-2 glass rounded-full text-[10px] font-bold text-indigo-400 border border-indigo-500/30">FINE
+                                        ART</span>
+                                    <span class="text-white font-bold text-xl counter" data-target="14.2"
+                                        data-prefix="$" data-suffix="M">$14.2M</span>
+                                </div>
+                                <h3 class="text-2xl font-bold">The Sapphire Horizon 1964</h3>
+                                <p class="text-slate-400 text-sm mt-2">Sold to a private collector in Singapore within
+                                    48 hours of listing.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Case Study 2 -->
+                    <div class="group reveal-child" style="transition-delay: 100ms;">
+                        <div
+                            class="relative rounded-[2.5rem] overflow-hidden mb-8 aspect-[4/3] glass border border-white/5 group-hover:border-cyan-500/30 transition-all duration-700">
+                            <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=1200"
+                                alt="Success Story"
+                                class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80">
+                            </div>
+                            <div class="absolute bottom-10 left-10 right-10">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <span
+                                        class="px-4 py-2 glass rounded-full text-[10px] font-bold text-cyan-400 border border-cyan-500/30">AUTOMOTIVE</span>
+                                    <span class="text-white font-bold text-xl counter" data-target="4.8" data-prefix="$"
+                                        data-suffix="M">$4.8M</span>
+                                </div>
+                                <h3 class="text-2xl font-bold">Concept Ghost V12</h3>
+                                <p class="text-slate-400 text-sm mt-2">Record-breaking realization for a limited-run
+                                    prototype asset.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Consignor FAQ -->
+            <section class="reveal py-32 px-6 md:px-16 lg:px-32 relative bg-slate-950">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-20">
+                        <h2
+                            class="text-3xl md:text-5xl font-semibold mb-6 text-transparent bg-clip-text text-purple-pink-gradient animate-fade-in animate-slide-up reveal-child text-gradient">
+                            Stewardship FAQ</h2>
+                        <p class="text-slate-400 reveal-child">Essential intelligence for the world's most discerning
+                            consignors.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- FAQ 1 -->
+                        <div class="glass border border-white/5 rounded-2xl overflow-hidden group reveal-child">
+                            <button
+                                class="w-full px-8 py-6 text-left flex justify-between items-center group-hover:bg-white/[0.02] transition-all">
+                                <span class="font-bold text-white">How is the estimate determined for my asset?</span>
+                                <i data-lucide="plus"
+                                    class="w-5 h-5 text-indigo-400 group-hover:rotate-45 transition-transform"></i>
+                            </button>
+                        </div>
+                        <!-- FAQ 2 -->
+                        <div class="glass border border-white/5 rounded-2xl overflow-hidden group reveal-child">
+                            <button
+                                class="w-full px-8 py-6 text-left flex justify-between items-center group-hover:bg-white/[0.02] transition-all">
+                                <span class="font-bold text-white">What insurance coverage is provided during
+                                    transit?</span>
+                                <i data-lucide="plus"
+                                    class="w-5 h-5 text-indigo-400 group-hover:rotate-45 transition-transform"></i>
+                            </button>
+                        </div>
+                        <!-- FAQ 3 -->
+                        <div class="glass border border-white/5 rounded-2xl overflow-hidden group reveal-child">
+                            <button
+                                class="w-full px-8 py-6 text-left flex justify-between items-center group-hover:bg-white/[0.02] transition-all">
+                                <span class="font-bold text-white">How discreet is the "Private Vault" matching
+                                    process?</span>
+                                <i data-lucide="plus"
+                                    class="w-5 h-5 text-indigo-400 group-hover:rotate-45 transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer"
+        class="relative w-full text-sm text-slate-400 mt-40 border-t border-slate-900 bg-slate-950/50 reveal">
+        <!-- Decoration -->
+        <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-screen-xl h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent">
+        </div>
+
+        <div class="px-6 md:px-12 lg:px-20 pt-24 pb-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+                <!-- Column 1: Brand & Social -->
+                <div class="space-y-8">
+                    <a href="#" class="flex items-center gap-2 group">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center holographic"
+                            style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(6, 182, 212, 0.3));">
+                            <i data-lucide="gavel" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold tracking-tight text-white uppercase">LuxeBid</span>
+                    </a>
+                    <p class="text-sm/7 max-w-xs">
+                        The global gold standard for high-value asset exchange, serving the world's most discerning
+                        collectors since 2026.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <a href="#!"
+                            class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-indigo-600/20 hover:border-indigo-500/50 hover:text-white transition-all">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#!"
+                            class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-indigo-600/20 hover:border-indigo-500/50 hover:text-white transition-all">
+                            <i data-lucide="twitter" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#!"
+                            class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-indigo-600/20 hover:border-indigo-500/50 hover:text-white transition-all">
+                            <i data-lucide="linkedin" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#!"
+                            class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-indigo-600/20 hover:border-indigo-500/50 hover:text-white transition-all">
+                            <i data-lucide="message-square" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Column 2: Categories -->
+                <div>
+                    <h4 class="font-bold text-white mb-8 uppercase tracking-widest text-[10px]">Marketplace</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#!" class="hover:text-indigo-400 transition-colors">Exotic Automobiles</a></li>
+                        <li><a href="#!" class="hover:text-indigo-400 transition-colors">Fine Horology</a></li>
+                        <li><a href="#!" class="hover:text-indigo-400 transition-colors">Elite Real Estate</a></li>
+                        <li><a href="#!" class="hover:text-indigo-400 transition-colors">Rare Fine Art</a></li>
+                        <li><a href="#!" class="hover:text-indigo-400 transition-colors">Statement Jewelry</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Navigation -->
+                <div>
+                    <h4 class="font-bold text-white mb-8 uppercase tracking-widest text-[10px]">LuxeBid House</h4>
+                    <ul class="space-y-4">
+                        <li><a href="about.html" class="hover:text-indigo-400 transition-colors">Our History</a>
+                        </li>
+                        <li><a href="services.html" class="hover:text-indigo-400 transition-colors">Auction
+                                Services</a>
+                        </li>
+                        <li><a href="contact.html" class="hover:text-indigo-400 transition-colors">Contact Desk</a>
+                        </li>
+                        <li><a href="index-2.html" class="hover:text-indigo-400 transition-colors">The Private
+                                Vault</a>
+                        </li>
+                        <li><a href="#!" class="hover:text-indigo-400 transition-colors">Global Offices</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Newsletter -->
+                <div class="space-y-8">
+                    <div>
+                        <h4 class="font-bold text-white mb-4 uppercase tracking-widest text-[10px]">The Intelligence
+                        </h4>
+                        <p class="text-xs/6 mb-6">Receive curated market insights and private lot notifications
+                            directly
+                            from our curators.</p>
+                        <form class="relative group">
+                            <input type="email" placeholder="Your secure email"
+                                class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-4 pr-28 py-3 outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all text-white text-xs">
+                            <button
+                                class="absolute top-1 right-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-bold rounded-lg transition-all active:scale-95">SUBSCRIBE</button>
+                        </form>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-12 h-8 rounded border border-white/10 flex items-center justify-center bg-slate-900 group">
+                            <i data-lucide="shield"
+                                class="w-4 h-4 text-slate-500 group-hover:text-emerald-500 transition-colors"></i>
+                        </div>
+                        <p class="text-[10px] text-slate-500 uppercase tracking-tighter">Verified Secure Platform
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-[10px] uppercase tracking-widest">
+                    © <span class="counter" data-target="2026">2026</span> LuxeBid International. Designed for the <span
+                        class="text-indigo-400">Elite</span>.
+                </p>
+                <div class="flex items-center gap-8 text-[10px] uppercase tracking-widest">
+                    <a href="#!" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#!" class="hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#!" class="hover:text-white transition-colors">Cookies Settings</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="rtltoggle.js"></script>
+</body>
+
+</html>

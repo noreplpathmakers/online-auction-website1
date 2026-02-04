@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | LuxeBid</title>
+
+    <!-- Fonts & CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { poppins: ['Poppins', 'sans-serif'] }, colors: { dark: '#0f172a' } } } }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+
+<body class="text-white font-poppins selection:bg-purple-500/30 overflow-x-hidden"
+    style="background: linear-gradient(135deg, #0a0118 0%, #1a0b2e 50%, #0a0118 100%);">
+
+    <!-- Navbar -->
+    <nav id="navbar"
+        class="sticky top-0 z-50 flex items-center justify-between w-full h-18 px-6 md:px-12 lg:px-20 glass"
+        style="border-bottom: 1px solid rgba(168, 85, 247, 0.3); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(168, 85, 247, 0.1);">
+        <a href="index.html" class="flex items-center gap-2 group">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center holographic neon-border"
+                style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(6, 182, 212, 0.3));">
+                <i data-lucide="zap" class="w-6 h-6 text-cyan-300"></i>
+            </div>
+            <span class="text-xl font-bold tracking-tight text-gradient">LUXEBID</span>
+        </a>
+
+        <div class="hidden lg:flex items-center gap-4 xl:gap-8 text-sm font-medium">
+            <!-- Home Dropdown -->
+            <div class="relative group">
+                <button class="flex items-center gap-1 hover:text-indigo-400 py-6">Home <i data-lucide="chevron-down"
+                        class="w-4 h-4 transition-transform group-hover:rotate-180"></i></button>
+                <div
+                    class="absolute top-[100%] left-0 w-48 bg-slate-900 border border-slate-800 rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-2xl z-50">
+                    <a href="index.html" class="block px-4 py-2 hover:bg-slate-800">Home 1</a>
+                    <a href="index-2.html" class="block px-4 py-2 hover:bg-slate-800">Home 2</a>
+                </div>
+            </div>
+
+            <a href="about.html" class="hover:text-indigo-400 transition-colors">About</a>
+            <a href="services.html" class="hover:text-indigo-400 transition-colors">Auction Services</a>
+            <a href="contact.html" class="hover:text-indigo-400 transition-colors">Contact</a>
+
+            <!-- Dashboard Dropdown -->
+            <div class="relative group">
+                <button class="flex items-center gap-1 hover:text-indigo-400 transition-colors py-6">
+                    Dashboard <i data-lucide="chevron-down"
+                        class="w-4 h-4 transition-transform group-hover:rotate-180"></i>
+                </button>
+                <div
+                    class="absolute top-[100%] left-0 w-52 bg-slate-900 border border-slate-800 rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top translate-y-2 group-hover:translate-y-0 shadow-2xl z-50">
+                    <a href="user-dashboard.html"
+                        class="block px-4 py-2 hover:bg-indigo-600/10 hover:text-indigo-400 transition-colors">User
+                        Dashboard</a>
+                    <a href="admin-dashboard.html"
+                        class="block px-4 py-2 hover:bg-indigo-600/10 hover:text-indigo-400 transition-colors">Admin
+                        Dashboard</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden lg:flex items-center gap-4">
+            <button onclick="toggleTheme()" class="p-2 glass rounded-lg hover:bg-white/10 transition-colors"><i
+                    id="theme-icon" data-lucide="sun" class="w-5 h-5 text-indigo-400"></i></button>
+            <button onclick="toggleRTL()" class="p-2 glass rounded-lg hover:bg-white/10 transition-colors"><i
+                    data-lucide="globe" class="w-5 h-5 text-indigo-400"></i></button>
+            <a href="login.html"
+                class="px-6 py-2 border border-slate-700 hover:bg-slate-900 rounded-lg transition-all active:scale-95">Login</a>
+            <a href="login.html"
+                class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all active:scale-95 shadow-lg shadow-indigo-600/20">Sign
+                Up</a>
+        </div>
+
+        <button id="mobile-menu-btn"
+            class="lg:hidden flex flex-col items-center justify-center gap-1.5 w-10 h-10 p-2 hover:bg-slate-800 rounded-lg transition-all"
+            aria-label="Toggle Menu">
+            <span class="hamburger-line w-6 h-0.5 bg-indigo-400 rounded-full transition-all duration-300"></span>
+            <span class="hamburger-line w-6 h-0.5 bg-indigo-400 rounded-full transition-all duration-300"></span>
+            <span class="hamburger-line w-6 h-0.5 bg-indigo-400 rounded-full transition-all duration-300"></span>
+        </button>
+    </nav>
+
+    <div id="mobile-menu"
+        class="fixed inset-0 z-[120] bg-slate-950/95 backdrop-blur-xl flex flex-col items-center justify-start gap-8 text-2xl font-medium transition-all duration-500 translate-x-full opacity-0 invisible lg:hidden overflow-y-auto py-24">
+        <div class="flex flex-col items-center gap-6">
+            <div class="flex flex-col items-center gap-2">
+                <span class="text-slate-500 text-sm uppercase tracking-widest">Home</span>
+                <a href="index.html" class="mobile-link hover:text-indigo-400 text-lg transition-colors">Home 1</a>
+                <a href="index-2.html" class="mobile-link hover:text-indigo-400 text-lg transition-colors">Home 2</a>
+            </div>
+            <a href="about.html" class="mobile-link hover:text-indigo-400 text-lg transition-colors">About</a>
+            <a href="services.html" class="mobile-link hover:text-indigo-400 text-lg transition-colors">Auction
+                Services</a>
+            <a href="contact.html" class="mobile-link hover:text-indigo-400 text-lg transition-colors">Contact</a>
+            <div class="flex flex-col items-center gap-2">
+                <span class="text-slate-500 text-sm uppercase tracking-widest">Dashboard</span>
+                <a href="user-dashboard.html" class="mobile-link hover:text-indigo-400 text-lg transition-colors">User
+                    Dashboard</a>
+                <a href="admin-dashboard.html" class="mobile-link hover:text-indigo-400 text-lg transition-colors">Admin
+                    Dashboard</a>
+            </div>
+        </div>
+        <div class="flex flex-col gap-4 mt-8 w-full px-12">
+            <a href="login.html"
+                class="px-6 py-2 border border-slate-700 hover:bg-slate-900 rounded-lg transition-all active:scale-95 text-center text-sm">Login</a>
+            <a href="login.html"
+                class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all active:scale-95 shadow-lg shadow-indigo-600/20 text-center text-sm">Sign
+                Up</a>
+
+            <!-- Theme Toggle -->
+            <button onclick="toggleTheme()" class="p-2 glass rounded-lg hover:bg-white/10 transition-colors"
+                aria-label="Toggle Theme">
+                <i id="theme-toggle-icon" data-lucide="sun" class="w-5 h-5 text-indigo-400"></i>
+            </button>
+
+            <!-- RTL Toggle -->
+            <button onclick="toggleRTL()" class="p-2 glass rounded-lg hover:bg-white/10 transition-colors"
+                aria-label="Toggle RTL">
+                <i data-lucide="globe" class="w-5 h-5 text-indigo-400"></i>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="flex w-full min-h-[calc(100vh-72px)]">
+        <!-- Sidebar -->
+        <aside id="dashboard-sidebar"
+            class="fixed inset-y-0 left-0 z-[60] w-64 glass no-hover-transform border-r border-purple-500/10 -translate-x-full opacity-0 invisible md:fixed md:translate-x-0 md:opacity-100 md:visible transition-all duration-300 top-[72px] h-[calc(100vh-72px)] overflow-y-auto custom-scrollbar">
+            <div class="p-6">
+                <!-- Mobile Close Button -->
+                <button id="close-sidebar-btn" class="md:hidden absolute top-4 right-4 p-2 text-slate-400">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+                <div class="mb-8 px-4">
+                    <p class="text-[10px] font-bold text-indigo-400 uppercase tracking-[0.2em] mb-2">Administration</p>
+                    <h2
+                        class="text-lg font-bold text-transparent bg-clip-text text-purple-pink-gradient animate-fade-in animate-slide-up tracking-tight">
+                        Admin Console</h2>
+                </div>
+                <div class="space-y-2">
+                    <a href="#overview-section"
+                        class="flex items-center gap-3 px-4 py-3 bg-indigo-600/20 text-indigo-400 rounded-xl font-medium sidebar-link active"><i
+                            data-lucide="bar-chart-2" class="w-5 h-5"></i> Platform Stats</a>
+                    <a href="#users-section"
+                        class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-white/5 rounded-xl transition-colors sidebar-link"><i
+                            data-lucide="users" class="w-5 h-5"></i> User Management</a>
+                    <a href="#messages-section"
+                        class="flex items-center justify-between px-4 py-3 text-slate-400 hover:bg-white/5 rounded-xl transition-colors sidebar-link group">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="message-square"
+                                class="w-5 h-5 text-slate-400 group-hover:text-indigo-400"></i>
+                            <span>Admin Inbox</span>
+                        </div>
+                    </a>
+                    <a href="#auctions-section"
+                        class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-white/5 rounded-xl transition-colors sidebar-link"><i
+                            data-lucide="gavel" class="w-5 h-5"></i> Auction Moderation</a>
+                    <a href="#analytics-section"
+                        class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-white/5 rounded-xl transition-colors sidebar-link"><i
+                            data-lucide="line-chart" class="w-5 h-5"></i> Analytics Hub</a>
+                    <a href="#logs-section"
+                        class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-white/5 rounded-xl transition-colors sidebar-link"><i
+                            data-lucide="scroll-text" class="w-5 h-5"></i> System Logs</a>
+
+                    <div class="h-px bg-slate-800 mx-4 my-4"></div>
+
+                    <a href="#settings-section"
+                        class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-white/5 rounded-xl transition-colors sidebar-link"><i
+                            data-lucide="settings" class="w-5 h-5"></i> Settings</a>
+                    <a href="login.html"
+                        class="flex items-center gap-3 px-4 py-3 text-red-400/60 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-all">
+                        <i data-lucide="log-out" class="w-5 h-5"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 ml-0 md:ml-64 p-4 sm:p-6 md:p-10 transition-all duration-300 min-w-0 overflow-hidden">
+            <!-- Mobile Sidebar Toggle -->
+            <button id="open-sidebar-btn"
+                class="md:hidden flex items-center justify-center mb-6 w-12 h-12 glass rounded-xl text-indigo-400 shadow-lg shadow-indigo-500/10"
+                aria-label="Open Sidebar">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+            <!-- 1. Platform Overview -->
+            <section id="overview-section" class="scroll-mt-24 mb-12">
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+                    <h1 class="text-3xl font-bold text-purple-pink-gradient">
+                        Platform Status</h1>
+                    <div class="flex items-center gap-2 glass px-4 py-2 rounded-full border border-emerald-500/30">
+                        <div class="size-2 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_10px_#34d399]"></div>
+                        <span class="text-emerald-400 text-xs font-bold uppercase tracking-widest">System
+                            Operational</span>
+                    </div>
+                </div>
+
+                <!-- Admin Stats Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                    <div
+                        class="p-5 sm:p-6 glass rounded-2xl md:rounded-[2rem] border border-slate-800 hover:border-indigo-500/30 transition-all group">
+                        <div class="flex items-center justify-between mb-4">
+                            <div
+                                class="size-10 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 group-hover:bg-emerald-500/20 transition-colors">
+                                <i data-lucide="dollar-sign" class="w-5 h-5 text-emerald-400"></i>
+                            </div>
+                            <span class="text-xs font-bold text-emerald-400">+12%</span>
+                        </div>
+                        <div class="text-slate-400 text-xs uppercase tracking-widest mb-1">Total Revenue</div>
+                        <div class="text-3xl font-bold text-white counter" data-target="12.4" data-prefix="$"
+                            data-suffix="M">$12.4M</div>
+                    </div>
+                    <div
+                        class="p-5 sm:p-6 glass rounded-2xl md:rounded-[2rem] border border-slate-800 hover:border-indigo-500/30 transition-all group">
+                        <div class="flex items-center justify-between mb-4">
+                            <div
+                                class="size-10 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">
+                                <i data-lucide="users" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <span class="text-xs font-bold text-blue-400">+5.2%</span>
+                        </div>
+                        <div class="text-slate-400 text-xs uppercase tracking-widest mb-1">Active Users</div>
+                        <div class="text-3xl font-bold text-white counter" data-target="1240">1,240</div>
+                    </div>
+                    <div
+                        class="p-5 sm:p-6 glass rounded-2xl md:rounded-[2rem] border border-slate-800 hover:border-indigo-500/30 transition-all group">
+                        <div class="flex items-center justify-between mb-4">
+                            <div
+                                class="size-10 rounded-xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20 group-hover:bg-purple-500/20 transition-colors">
+                                <i data-lucide="gavel" class="w-5 h-5 text-purple-400"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-500">Normal</span>
+                        </div>
+                        <div class="text-slate-400 text-xs uppercase tracking-widest mb-1">Live Auctions</div>
+                        <div class="text-3xl font-bold text-white counter" data-target="58">58</div>
+                    </div>
+                    <div
+                        class="p-5 sm:p-6 glass rounded-2xl md:rounded-[2rem] border border-slate-800 hover:border-indigo-500/30 transition-all group">
+                        <div class="flex items-center justify-between mb-4">
+                            <div
+                                class="size-10 rounded-xl bg-orange-500/10 flex items-center justify-center border border-orange-500/20 group-hover:bg-orange-500/20 transition-colors">
+                                <i data-lucide="alert-circle" class="w-5 h-5 text-orange-400"></i>
+                            </div>
+                            <span class="text-xs font-bold text-orange-400">High</span>
+                        </div>
+                        <div class="text-slate-400 text-xs uppercase tracking-widest mb-1">Verifications</div>
+                        <div class="text-3xl font-bold text-orange-400 counter" data-target="12">12</div>
+                    </div>
+                </div>
+
+                <!-- Admin Quick Actions -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <button
+                        class="flex items-center gap-3 p-4 glass rounded-2xl md:rounded-[1.5rem] border border-slate-800 hover:border-indigo-500/30 transition-all group text-left">
+                        <div
+                            class="size-10 rounded-xl bg-indigo-600/20 flex items-center justify-center group-hover:bg-indigo-600/30 transition-colors">
+                            <i data-lucide="plus" class="w-5 h-5 text-indigo-400"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold">New Auction</div>
+                            <div class="text-[10px] text-slate-500">Create global lot</div>
+                        </div>
+                    </button>
+                    <button
+                        class="flex items-center gap-3 p-4 glass rounded-2xl md:rounded-[1.5rem] border border-slate-800 hover:border-indigo-500/30 transition-all group text-left">
+                        <div
+                            class="size-10 rounded-xl bg-cyan-600/20 flex items-center justify-center group-hover:bg-cyan-600/30 transition-colors">
+                            <i data-lucide="shield" class="w-5 h-5 text-cyan-400"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold">Audit Logs</div>
+                            <div class="text-[10px] text-slate-500">Security review</div>
+                        </div>
+                    </button>
+                    <button
+                        class="flex items-center gap-3 p-4 glass rounded-2xl md:rounded-[1.5rem] border border-slate-800 hover:border-indigo-500/30 transition-all group text-left">
+                        <div
+                            class="size-10 rounded-xl bg-amber-600/20 flex items-center justify-center group-hover:bg-amber-600/30 transition-colors">
+                            <i data-lucide="mail" class="w-5 h-5 text-amber-400"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold">Newsletter</div>
+                            <div class="text-[10px] text-slate-500">Send to all users</div>
+                        </div>
+                    </button>
+                    <button
+                        class="flex items-center gap-3 p-4 glass rounded-2xl md:rounded-[1.5rem] border border-slate-800 hover:border-indigo-500/30 transition-all group text-left">
+                        <div
+                            class="size-10 rounded-xl bg-red-600/20 flex items-center justify-center group-hover:bg-red-600/30 transition-colors">
+                            <i data-lucide="settings" class="w-5 h-5 text-red-400"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold">System Maintenance</div>
+                            <div class="text-[10px] text-slate-500">Control platform</div>
+                        </div>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 2. User Management -->
+            <section id="users-section" class="scroll-mt-24 mb-12">
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+                    <h2
+                        class="text-2xl font-bold text-transparent bg-clip-text text-purple-pink-gradient animate-fade-in animate-slide-up">
+                        User Management</h2>
+                    <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                        <div class="relative w-full md:w-auto">
+                            <i data-lucide="search"
+                                class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"></i>
+                            <input type="text" id="user-search-input" placeholder="Search users..."
+                                class="w-full md:w-64 pl-10 pr-4 py-2 glass rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500/50">
+                        </div>
+                        <button id="export-users-btn"
+                            class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700 transition-colors w-full sm:w-auto text-center">Export
+                            Users</button>
+                    </div>
+                </div>
+
+                <div class="glass rounded-2xl md:rounded-[2rem] border border-slate-800 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-slate-400">
+                            <thead class="bg-slate-900/50 text-slate-200 uppercase text-xs">
+                                <tr>
+                                    <th class="px-6 py-4">User</th>
+                                    <th class="px-6 py-4">Role</th>
+                                    <th class="px-6 py-4">Status</th>
+                                    <th class="px-6 py-4">Verified</th>
+                                    <th class="px-6 py-4">Activity</th>
+                                    <th class="px-6 py-4">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table-body" class="divide-y divide-slate-800/50">
+                                <tr class="hover:bg-white/5 transition-colors group">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div
+                                                class="size-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold text-xs">
+                                                AV</div>
+                                            <div>
+                                                <div
+                                                    class="font-medium text-white group-hover:text-indigo-400 transition-colors">
+                                                    Alice V.</div>
+                                                <div class="text-[10px] text-slate-500">alice@luxebid.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">Bidder</td>
+                                    <td class="px-6 py-4"><span
+                                            class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">Active</span>
+                                    </td>
+                                    <td class="px-6 py-4"><i data-lucide="check-circle"
+                                            class="w-4 h-4 text-indigo-400"></i></td>
+                                    <td class="px-6 py-4">2 mins ago</td>
+                                    <td class="px-6 py-4"><button
+                                            class="text-indigo-400 hover:text-indigo-300 font-bold">Manage</button></td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition-colors group">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div
+                                                class="size-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold text-xs">
+                                                MT</div>
+                                            <div>
+                                                <div
+                                                    class="font-medium text-white group-hover:text-purple-400 transition-colors">
+                                                    Marcus T.</div>
+                                                <div class="text-[10px] text-slate-500">marcus@estates.io</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">Seller</td>
+                                    <td class="px-6 py-4"><span
+                                            class="px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-400 text-[10px] font-bold">Pending</span>
+                                    </td>
+                                    <td class="px-6 py-4"><i data-lucide="clock" class="w-4 h-4 text-orange-400"></i>
+                                    </td>
+                                    <td class="px-6 py-4">45 mins ago</td>
+                                    <td class="px-6 py-4"><button
+                                            class="text-orange-400 hover:text-orange-300 font-bold">Verify</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Auction Moderation -->
+            <section id="auctions-section" class="scroll-mt-24 mb-12">
+                <div class="flex items-center justify-between mb-8">
+                    <h2
+                        class="text-2xl font-bold text-transparent bg-clip-text text-purple-pink-gradient animate-fade-in animate-slide-up">
+                        Moderation Queue</h2>
+
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div
+                        class="p-5 sm:p-6 glass rounded-2xl md:rounded-[2rem] border border-slate-800 hover:border-indigo-500/30 transition-all flex flex-col sm:flex-row gap-6">
+                        <div class="w-32 aspect-square rounded-2xl overflow-hidden shrink-0">
+                            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=300"
+                                class="w-full h-full object-cover" alt="Auction Item">
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-lg">Rare Air Jordan 1 '85</h4>
+                                <span class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">ID:
+                                    #8122</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-4">Seller: <span
+                                    class="text-indigo-400">SoleProphet</span> • Est. Value: <span class="counter"
+                                    data-target="45000" data-prefix="$">$45,000</span></p>
+                            <div class="flex gap-2">
+                                <button
+                                    class="px-4 py-2 bg-emerald-600/20 text-emerald-400 rounded-xl text-xs font-bold hover:bg-emerald-600/30 transition-all flex-1">Approve</button>
+                                <button
+                                    class="px-4 py-2 bg-red-600/20 text-red-100 rounded-xl text-xs font-bold hover:bg-red-600/30 transition-all flex-1">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 sm:p-6 glass rounded-2xl md:rounded-[2rem] border border-slate-800 hover:border-indigo-500/30 transition-all flex flex-col sm:flex-row gap-6">
+                        <div class="w-32 aspect-square rounded-2xl overflow-hidden shrink-0">
+                            <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=300"
+                                class="w-full h-full object-cover" alt="Auction Item">
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-lg">Vintage Patek Philippe</h4>
+                                <span class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">ID:
+                                    #8123</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-4">Seller: <span
+                                    class="text-indigo-400">TimeKeeper</span> • Est. Value: <span class="counter"
+                                    data-target="85000" data-prefix="$">$85,000</span></p>
+                            <div class="flex gap-2">
+                                <button
+                                    class="px-4 py-2 bg-emerald-600/20 text-emerald-400 rounded-xl text-xs font-bold hover:bg-emerald-600/30 transition-all flex-1">Approve</button>
+                                <button
+                                    class="px-4 py-2 bg-red-600/20 text-red-100 rounded-xl text-xs font-bold hover:bg-red-600/30 transition-all flex-1">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Analytics Hub -->
+            <section id="analytics-section" class="scroll-mt-24 mb-12">
+                <div class="flex items-center justify-between mb-8 text-gradient">
+                    <h2
+                        class="text-2xl font-bold text-transparent bg-clip-text text-purple-pink-gradient animate-fade-in animate-slide-up">
+                        Analytics Hub</h2>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Chart 1: User Growth -->
+                    <div
+                        class="p-4 sm:p-6 md:p-8 glass rounded-[2rem] sm:rounded-[2.5rem] border border-slate-800 hover:border-indigo-500/30 transition-all duration-500">
+                        <h3 class="font-bold mb-4 sm:mb-6 flex items-center gap-2 text-sm sm:text-base"><i
+                                data-lucide="trending-up" class="w-4 h-4 text-emerald-400"></i> Platform User Growth
+                        </h3>
+                        <div class="h-48 sm:h-64">
+                            <canvas id="userGrowthChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- Chart 2: Revenue Streams -->
+                    <div
+                        class="p-5 sm:p-8 glass rounded-2xl md:rounded-[2.5rem] border border-slate-800 hover:border-indigo-500/30 transition-all duration-500">
+                        <h3 class="font-bold mb-6 flex items-center gap-2 text-sm sm:text-base"><i
+                                data-lucide="pie-chart" class="w-4 h-4 text-purple-400"></i> Business Revenue Streams
+                        </h3>
+                        <div class="h-64 w-full flex justify-center">
+                            <canvas id="revenueSourcesChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- Chart 3: Bidding Activity -->
+                    <div
+                        class="p-5 sm:p-8 glass rounded-2xl md:rounded-[2.5rem] border border-slate-800 hover:border-indigo-500/30 transition-all duration-500">
+                        <h3 class="font-bold mb-6 flex items-center gap-2 text-sm sm:text-base"><i
+                                data-lucide="line-chart" class="w-4 h-4 text-blue-400"></i> Bidding Activity Trend <span
+                                class="ml-auto text-sm font-normal text-slate-400 hidden sm:inline">Total: <span
+                                    class="counter font-bold text-white" data-target="15420">15,420</span></span></h3>
+                        <div class="h-64 w-full">
+                            <canvas id="adminColumnChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- Chart 4: Market Reach -->
+                    <div
+                        class="p-5 sm:p-8 glass rounded-2xl md:rounded-[2.5rem] border border-slate-800 hover:border-indigo-500/30 transition-all duration-500">
+                        <h3 class="font-bold mb-6 flex items-center gap-2 text-sm sm:text-base"><i data-lucide="globe"
+                                class="w-4 h-4 text-amber-400"></i> Regional Market Reach <span
+                                class="ml-auto text-sm font-normal text-slate-400 hidden sm:inline">Markets: <span
+                                    class="counter font-bold text-white" data-target="6">6</span></span></h3>
+                        <div class="h-64 w-full">
+                            <canvas id="adminBarChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- Chart 5: Category Split -->
+                    <div
+                        class="p-5 sm:p-8 glass rounded-2xl md:rounded-[2.5rem] border border-slate-800 hover:border-indigo-500/30 transition-all duration-500">
+                        <h3 class="font-bold mb-6 flex items-center gap-2 text-sm sm:text-base"><i
+                                data-lucide="aperture" class="w-4 h-4 text-pink-400"></i> Category Split Analysis</h3>
+                        <div class="h-64 w-full flex justify-center">
+                            <canvas id="adminPieChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- Chart 6: Bid Density -->
+                    <div
+                        class="p-5 sm:p-8 glass rounded-2xl md:rounded-[2.5rem] border border-slate-800 hover:border-indigo-500/30 transition-all duration-500">
+                        <h3 class="font-bold mb-6 flex items-center gap-2 text-sm sm:text-base"><i
+                                data-lucide="bar-chart-2" class="w-4 h-4 text-cyan-400"></i> Hourly Bid Density</h3>
+                        <div class="h-64 w-full">
+                            <canvas id="adminScatterChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. Admin Inbox -->
+            <section id="messages-section" class="scroll-mt-24 mb-12">
+                <div class="flex items-center justify-between mb-8">
+                    <h2
+                        class="text-2xl font-bold text-transparent bg-clip-text text-purple-pink-gradient animate-fade-in animate-slide-up">
+                        Admin Inbox</h2>
+
+                </div>
+
+                <div class="space-y-4">
+                    <div
+                        class="message-card p-6 glass rounded-[2rem] border border-slate-800 hover:border-indigo-500/30 transition-all cursor-pointer">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center gap-3">
+                                <div class="size-10 rounded-full bg-indigo-500/10 flex items-center justify-center">
+                                    <i data-lucide="user" class="w-5 h-5 text-indigo-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white">Verification Support</h4>
+                                    <p class="text-[10px] text-slate-500 uppercase">From: user_9921 (Marcus T.)</p>
+                                </div>
+                            </div>
+                            <span class="text-[10px] text-slate-500 font-mono">10:45 AM</span>
+                        </div>
+                        <p class="text-sm text-slate-400 mt-4 leading-relaxed">"I've uploaded the additional proof of
+                            residency as requested for my Seller verification. Please review at your earliest
+                            convenience."</p>
+                        <div class="flex gap-3 mt-6">
+                            <button
+                                class="js-reply-btn px-4 py-1.5 bg-indigo-600 rounded-lg text-xs font-bold hover:bg-indigo-700 transition-colors">Reply</button>
+                            <button
+                                class="js-resolve-btn px-4 py-1.5 border border-slate-800 rounded-lg text-xs font-bold hover:bg-white/5 transition-colors">Mark
+                                as Resolved</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. System Logs -->
+            <section id="logs-section" class="scroll-mt-24">
+                <h2
+                    class="text-2xl font-bold mb-8 text-transparent bg-clip-text text-purple-pink-gradient animate-fade-in animate-slide-up">
+                    Critical System Logs</h2>
+                <div class="space-y-4">
+                    <div class="p-4 glass rounded-2xl border border-slate-800 flex items-center gap-4">
+                        <div class="size-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]"></div>
+                        <span class="text-xs font-mono text-slate-500 shrink-0">14:22:01</span>
+                        <p class="text-sm">Auction <span class="text-indigo-400">#44512</span> successfully listed
+                            by
+                            vendor <span class="text-slate-300">EliteMotors</span></p>
+                    </div>
+                    <div class="p-4 glass rounded-2xl border border-slate-800 flex items-center gap-4">
+                        <div class="size-2 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444]"></div>
+                        <span class="text-xs font-mono text-slate-500 shrink-0">13:58:45</span>
+                        <p class="text-sm">Failed login attempt from IP <span class="text-red-400">192.168.1.1</span>
+                            (User: admin_test)</p>
+                    </div>
+                    <div class="p-4 glass rounded-2xl border border-slate-800 flex items-center gap-4">
+                        <div class="size-2 rounded-full bg-blue-500 shadow-[0_0_10px_#3b82f6]"></div>
+                        <span class="text-xs font-mono text-slate-500 shrink-0">12:15:30</span>
+                        <p class="text-sm">Global CDN cache purged successfully by <span class="text-indigo-400">System
+                                Root</span></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. Platform Settings -->
+            <section id="settings-section" class="scroll-mt-24 pb-20">
+                <h2
+                    class="text-2xl font-bold mb-8 text-transparent bg-clip-text text-purple-pink-gradient animate-fade-in animate-slide-up">
+                    Platform Settings</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="p-8 glass rounded-[2.5rem] border border-slate-800">
+                        <h3 class="font-bold mb-6 flex items-center gap-2">
+                            <i data-lucide="tool" class="w-4 h-4 text-slate-400"></i> General Configuration
+                        </h3>
+                        <div class="space-y-4">
+                            <div
+                                class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5">
+                                <div>
+                                    <div class="text-sm font-bold">Maintenance Mode</div>
+                                    <div class="text-[10px] text-slate-500 uppercase tracking-widest">Global Lock
+                                    </div>
+                                </div>
+                                <div class="w-12 h-6 bg-slate-800 rounded-full relative">
+                                    <div class="absolute left-1 top-1 size-4 bg-slate-400 rounded-full"></div>
+                                </div>
+                            </div>
+                            <div
+                                class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5">
+                                <div>
+                                    <div class="text-sm font-bold">New User Registration</div>
+                                    <div class="text-[10px] text-slate-500 uppercase tracking-widest">Public Access
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-12 h-6 bg-emerald-500/20 rounded-full relative border border-emerald-500/30">
+                                    <div
+                                        class="absolute right-1 top-1 size-4 bg-emerald-400 rounded-full shadow-[0_0_8px_#34d399]">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8 glass rounded-[2.5rem] border border-slate-800">
+                        <h3 class="font-bold mb-6 flex items-center gap-2">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i> Security & Limits
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+                                <div class="text-xs text-slate-500 mb-1">Max Bidding Increment</div>
+                                <div class="text-lg font-bold font-mono">$5,000,000</div>
+                            </div>
+                            <div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+                                <div class="text-xs text-slate-500 mb-1">Session Timeout (Minutes)</div>
+                                <div class="text-lg font-bold font-mono">120</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer id="footer"
+                class="relative w-full text-sm text-slate-400 mt-40 border-t border-slate-900 bg-slate-950/50 reveal">
+                <!-- Decoration -->
+                <div
+                    class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-screen-xl h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent">
+                </div>
+
+                <div class="px-6 md:px-12 lg:px-20 pt-24 pb-12">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+                        <!-- Column 1: Brand & Social -->
+                        <div class="space-y-8">
+                            <a href="#" class="flex items-center gap-2 group">
+                                <div class="w-10 h-10 rounded-lg flex items-center justify-center holographic"
+                                    style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(6, 182, 212, 0.3));">
+                                    <i data-lucide="gavel" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <span class="text-xl font-bold tracking-tight text-white uppercase">LuxeBid</span>
+                            </a>
+                            <p class="text-sm/7 max-w-xs">
+                                The global gold standard for high-value asset exchange, serving the world's most
+                                discerning
+                                collectors since 2026.
+                            </p>
+                            <div class="flex items-center gap-4">
+                                <a href="#!"
+                                    class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-indigo-600/20 hover:border-indigo-500/50 hover:text-white transition-all">
+                                    <i data-lucide="instagram" class="w-4 h-4"></i>
+                                </a>
+                                <a href="#!"
+                                    class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-indigo-600/20 hover:border-indigo-500/50 hover:text-white transition-all">
+                                    <i data-lucide="twitter" class="w-4 h-4"></i>
+                                </a>
+                                <a href="#!"
+                                    class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-indigo-600/20 hover:border-indigo-500/50 hover:text-white transition-all">
+                                    <i data-lucide="linkedin" class="w-4 h-4"></i>
+                                </a>
+                                <a href="#!"
+                                    class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-indigo-600/20 hover:border-indigo-500/50 hover:text-white transition-all">
+                                    <i data-lucide="message-square" class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Column 2: Categories -->
+                        <div>
+                            <h4 class="font-bold text-white mb-8 uppercase tracking-widest text-[10px]">Marketplace</h4>
+                            <ul class="space-y-4">
+                                <li><a href="#!" class="hover:text-indigo-400 transition-colors">Exotic Automobiles</a>
+                                </li>
+                                <li><a href="#!" class="hover:text-indigo-400 transition-colors">Fine Horology</a></li>
+                                <li><a href="#!" class="hover:text-indigo-400 transition-colors">Elite Real Estate</a>
+                                </li>
+                                <li><a href="#!" class="hover:text-indigo-400 transition-colors">Rare Fine Art</a></li>
+                                <li><a href="#!" class="hover:text-indigo-400 transition-colors">Statement Jewelry</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Column 3: Navigation -->
+                        <div>
+                            <h4 class="font-bold text-white mb-8 uppercase tracking-widest text-[10px]">LuxeBid House
+                            </h4>
+                            <ul class="space-y-4">
+                                <li><a href="about.html" class="hover:text-indigo-400 transition-colors">Our History</a>
+                                </li>
+                                <li><a href="services.html" class="hover:text-indigo-400 transition-colors">Auction
+                                        Services</a>
+                                </li>
+                                <li><a href="contact.html" class="hover:text-indigo-400 transition-colors">Contact
+                                        Desk</a>
+                                </li>
+                                <li><a href="index-2.html" class="hover:text-indigo-400 transition-colors">The Private
+                                        Vault</a>
+                                </li>
+                                <li><a href="#!" class="hover:text-indigo-400 transition-colors">Global Offices</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Column 4: Newsletter -->
+                        <div class="space-y-8">
+                            <div>
+                                <h4 class="font-bold text-white mb-4 uppercase tracking-widest text-[10px]">The
+                                    Intelligence
+                                </h4>
+                                <p class="text-xs/6 mb-6">Receive curated market insights and private lot notifications
+                                    directly
+                                    from our curators.</p>
+                                <form class="relative group">
+                                    <input type="email" placeholder="Your secure email"
+                                        class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-4 pr-28 py-3 outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all text-white text-xs">
+                                    <button
+                                        class="absolute top-1 right-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-bold rounded-lg transition-all active:scale-95">SUBSCRIBE</button>
+                                </form>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-12 h-8 rounded border border-white/10 flex items-center justify-center bg-slate-900 group">
+                                    <i data-lucide="shield"
+                                        class="w-4 h-4 text-slate-500 group-hover:text-emerald-500 transition-colors"></i>
+                                </div>
+                                <p class="text-[10px] text-slate-500 uppercase tracking-tighter">Verified Secure
+                                    Platform
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                        <p class="text-[10px] uppercase tracking-widest">
+                            © <span class="counter" data-target="2026">2026</span> LuxeBid International. Designed for
+                            the
+                            <span class="text-indigo-400">Elite</span>.
+                        </p>
+                        <div class="flex items-center gap-8 text-[10px] uppercase tracking-widest">
+                            <a href="#!" class="hover:text-white transition-colors">Privacy Policy</a>
+                            <a href="#!" class="hover:text-white transition-colors">Terms of Service</a>
+                            <a href="#!" class="hover:text-white transition-colors">Cookies Settings</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="rtltoggle.js"></script>
+    <script>
+            // High-reliability Sidebar Toggle
+            (function () {
+                const initSidebar = () => {
+                    const openBtn = document.getElementById('open-sidebar-btn');
+                    const closeBtn = document.getElementById('close-sidebar-btn');
+                    const sidebar = document.getElementById('dashboard-sidebar');
+
+                    if (!sidebar) return;
+
+                    if (openBtn) {
+                        openBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            sidebar.classList.remove('-translate-x-full', 'opacity-0', 'invisible');
+                            document.body.style.overflow = 'hidden';
+                            console.log('Sidebar opened');
+                        });
+                    }
+
+                    if (closeBtn) {
+                        closeBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            sidebar.classList.add('-translate-x-full', 'opacity-0', 'invisible');
+                            document.body.style.removeProperty('overflow');
+                            console.log('Sidebar closed');
+                        });
+                    }
+
+                    // Close on link click (mobile)
+                    const links = sidebar.querySelectorAll('.sidebar-link');
+                    links.forEach(link => {
+                        link.addEventListener('click', () => {
+                            if (window.innerWidth < 768) {
+                                sidebar.classList.add('-translate-x-full', 'opacity-0', 'invisible');
+                                document.body.style.removeProperty('overflow');
+                            }
+                        });
+                    });
+
+                    // Ensure icons are rendered
+                    if (window.lucide) lucide.createIcons();
+                };
+
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initSidebar);
+                } else {
+                    initSidebar();
+                }
+            })();
+    </script>
+</body>
+
+</html>
